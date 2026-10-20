@@ -1,0 +1,12 @@
+ZoneDetect library
+Copyright (c) 2018, Bertold Van den Bergh
+BSD-3-Clause. The license is at the top of zonedetect.c and zonedetect.h.
+
+timezone21.bin
+Timezone boundaries compiled for ZoneDetect from timezone-boundary-builder.
+That project is derived from OpenStreetMap and is offered under the Open
+Database License (ODbL): https://opendatacommons.org/licenses/odbl/
+Contains data from Natural Earth, placed in the public domain.
+
+zoneinfo/
+IANA time zone database. Public domain. Packaged from tzdata 2026.5.

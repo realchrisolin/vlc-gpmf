@@ -1,0 +1,4 @@
+build/
+__pycache__/
+*.pyc
+third_party/vlc-3.0.23-win64.7z
