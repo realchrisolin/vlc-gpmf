@@ -1,5 +1,6 @@
 /*
  * gpmf-dump — print a gpmd track and one sample time.
+ * Copyright (C) 2026 Chris Olin
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "gpmf_read.h"

@@ -8,6 +8,7 @@
  *
  * stb_image.h (public domain / MIT, nothings/stb) decodes the PNG and JPEG.
  *
+ * Copyright (C) 2026 Chris Olin
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "hud_tiles.h"

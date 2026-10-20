@@ -10,6 +10,7 @@
  * tick reuses the map picture. The zoom level still picks the tile.
  * The corner mark hides a panel.
  *
+ * Copyright (C) 2026 Chris Olin
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #ifndef __PLUGIN__
@@ -23,13 +24,10 @@
 #include <string.h>
 
 #include <vlc_common.h>
-/* vlc_plugin.h snapshots this while it is included. A later define does not export. */
-#define VLC_MODULE_LICENSE \
-    "\x4c\x69\x63\x65\x6e\x73\x65\x64\x20\x75\x6e\x64\x65\x72\x20\x74" \
-    "\x68\x65\x20\x74\x65\x72\x6d\x73\x20\x6f\x66\x20\x74\x68\x65\x20" \
-    "\x47\x4e\x55\x20\x47\x65\x6e\x65\x72\x61\x6c\x20\x50\x75\x62\x6c" \
-    "\x69\x63\x20\x4c\x69\x63\x65\x6e\x73\x65\x2c\x20\x76\x65\x72\x73" \
-    "\x69\x6f\x6e\x20\x32\x20\x6f\x72\x20\x6c\x61\x74\x65\x72\x2e"
+/* vlc_plugin.h snapshots these while it is included. A later define does not export.
+ * Out of tree, an unset license is recorded as LGPL-2.1-or-later. */
+#define VLC_MODULE_LICENSE VLC_LICENSE_GPL_2_PLUS
+#define VLC_MODULE_COPYRIGHT "Copyright (C) 2026 Chris Olin"
 #include <vlc_plugin.h>
 #include <vlc_filter.h>
 #include <vlc_input.h>
@@ -270,6 +268,8 @@ static subpicture_t *Filter(filter_t *, vlc_tick_t);
 static int map_source_of(const char *);
 
 vlc_module_begin()
+    /* No catalog is shipped. Leaving the domain unset is the out-of-tree
+     * choice for a plugin that does not translate its own strings. */
     set_shortname("GPMF")
     set_description("GoPro GPMF HUD")
     set_help("Read the gpmd track and draw an information HUD during playback. These values are the starting look for the next launch and for Convert/Save. The gear changes this playback and does not write them. Save as default does.")

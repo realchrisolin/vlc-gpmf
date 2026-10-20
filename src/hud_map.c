@@ -1,6 +1,7 @@
 /*
  * Dark map inset and the travel arrow. Tiles are painted by the caller
  * between the panel and the marker.
+ * Copyright (C) 2026 Chris Olin
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "hud_map.h"

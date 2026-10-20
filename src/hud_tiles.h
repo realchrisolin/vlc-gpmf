@@ -4,6 +4,7 @@
  * Raster tiles for the GNSS inset. OpenStreetMap, Mapbox Streets, and
  * Google roadmap. The filter thread only paints. A worker fetches.
  *
+ * Copyright (C) 2026 Chris Olin
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include <stddef.h>

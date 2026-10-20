@@ -2,6 +2,7 @@
  * gpmf_read.h — read a GoPro gpmd track for playback.
  *
  * Original reader. It does not include GoPro's gpmf-parser.
+ * Copyright (C) 2026 Chris Olin
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #ifndef GPMF_READ_H

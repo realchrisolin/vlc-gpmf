@@ -1,0 +1,18 @@
+VLC 3.0.23 plugin SDK
+Copyright (C) the VideoLAN VLC media player developers
+
+These headers, import libraries, and pkg-config files are an unmodified
+extract of the official Windows SDK, the sdk/ directory inside
+https://download.videolan.org/pub/videolan/vlc/3.0.23/win64/vlc-3.0.23-win64.7z
+
+libvlccore and this SDK are released under the GNU Lesser General Public
+License, version 2.1 or later. The license text is COPYING.LIB in this
+directory. Corresponding source:
+https://download.videolan.org/pub/videolan/vlc/3.0.23/vlc-3.0.23.tar.xz
+
+The pkg-config files keep VideoLAN's CI prefix
+(/builds/videolan/vlc/win64/_win32). The Windows makefile includes the
+headers from this tree and links the installed libvlccore.dll. It does
+not use those .pc files.
+
+This plugin is not a VideoLAN project.

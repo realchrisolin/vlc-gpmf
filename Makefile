@@ -17,7 +17,9 @@ SRCS     = src/plugin.c src/gpmf_read.c src/hud_font.c src/hud_map.c src/hud_til
 ifeq ($(OS),Windows_NT)
   OUT      := build/libgpmf_plugin.dll
   VLC_INC  := third_party/vlc/vlc-3.0.23/sdk/include/vlc/plugins
-  VLC_DLL  := C:/Program Files/VideoLAN/VLC/libvlccore.dll
+  # The SDK .pc prefix is VideoLAN's CI path, and sdk/lib/*.lib are MSVC
+  # import libraries. MinGW links the installed libvlccore.dll instead.
+  VLC_DLL  ?= C:/Program Files/VideoLAN/VLC/libvlccore.dll
   CFLAGS   += -I$(VLC_INC) -DMODULE_STRING=\"gpmf\" -D__PLUGIN__ \
               -D_FILE_OFFSET_BITS=64 -D_REENTRANT -D_THREAD_SAFE
   # Static libgcc keeps stack probes inside the DLL. VLC will not load libgcc_s or winpthread.
@@ -25,18 +27,24 @@ ifeq ($(OS),Windows_NT)
   LIBS     := "$(VLC_DLL)" -lm -lgdi32 -luser32
 else
   UNAME_S  := $(shell uname -s)
-  CFLAGS   += -fPIC $(shell pkg-config --cflags vlc-plugin) -DMODULE_STRING=\"gpmf\" \
-              -D__PLUGIN__ -D_FILE_OFFSET_BITS=64
+  # pkg-config --cflags vlc-plugin already passes -D__PLUGIN__. MODULE_STRING
+  # is this plugin's name. Hidden visibility keeps the dynamic exports to
+  # vlc_entry*, which vlc_plugin.h marks default.
+  CFLAGS   += -fPIC -fvisibility=hidden $(shell pkg-config --cflags vlc-plugin) \
+              -DMODULE_STRING=\"gpmf\" -D__PLUGIN__ -D_FILE_OFFSET_BITS=64
   ifeq ($(UNAME_S),Darwin)
     OUT     := build/libgpmf_plugin.dylib
-    LDFLAGS := -dynamiclib
+    LDFLAGS := -dynamiclib -Wl,-undefined,error
     LIBS    := $(shell pkg-config --libs vlc-plugin) -lm -pthread
   else
     OUT     := build/libgpmf_plugin.so
-    LDFLAGS := -shared
+    LDFLAGS := -shared -Wl,-no-undefined
     LIBS    := $(shell pkg-config --libs vlc-plugin) -lm -ldl -pthread
   endif
 endif
+
+PREFIX    ?= /usr/local
+plugindir := $(PREFIX)/lib/vlc/plugins/misc
 
 CHECK_SRCS = tests/check.c src/gpmf_read.c src/hud_map.c src/hud_zone.c \
              third_party/zonedetect/zonedetect.c
@@ -54,7 +62,7 @@ else
   endif
 endif
 
-.PHONY: all clean check
+.PHONY: all clean check install uninstall
 
 all: $(OUT)
 
@@ -77,3 +85,16 @@ endif
 
 clean:
 	$(RM) $(OUT) $(CHECK_BIN) build/check-seam.mp4 build/check-gps9.mp4 build/check-file.mp4
+
+ifeq ($(OS),Windows_NT)
+install:
+	@echo Copy $(OUT) into VLC's plugins\misc, or set VLC_PLUGIN_PATH. See README.md.
+uninstall:
+	@echo Remove libgpmf_plugin.dll from VLC's plugins\misc.
+else
+install: all
+	mkdir -p $(DESTDIR)$(plugindir)
+	install -m 0755 $(OUT) $(DESTDIR)$(plugindir)/
+uninstall:
+	rm -f $(DESTDIR)$(plugindir)/libgpmf_plugin.so $(DESTDIR)$(plugindir)/libgpmf_plugin.dylib
+endif

@@ -6,6 +6,7 @@
  * window comes from stts. Samples sit on the center of equal slots
  * inside that window. SCAL is applied when the sample is stored.
  *
+ * Copyright (C) 2026 Chris Olin
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "gpmf_read.h"

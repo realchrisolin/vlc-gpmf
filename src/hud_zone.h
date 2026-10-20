@@ -9,6 +9,9 @@
  *
  * The boundary database is ZoneDetect (BSD-3-Clause) with timezone polygons
  * from timezone-boundary-builder (ODbL). Offsets come from IANA tzdata.
+ *
+ * Copyright (C) 2026 Chris Olin
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include <stdint.h>
 

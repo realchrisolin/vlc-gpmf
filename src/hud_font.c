@@ -2,6 +2,7 @@
  * Rasterize Segoe UI into the HUD panel.
  * Linux and macOS have no Segoe UI here, so prepare fails and the HUD
  * draws its bitmap glyphs instead.
+ * Copyright (C) 2026 Chris Olin
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #if !defined(_WIN32)

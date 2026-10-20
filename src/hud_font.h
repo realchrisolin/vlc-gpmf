@@ -4,6 +4,9 @@
  * Segoe UI for the HUD. The date, labels, and units are Regular. The time
  * and the readings are Semibold. Digits are drawn in the width of "0" so a
  * changing 1 does not shift the string. Semibold's own figures are proportional.
+ *
+ * Copyright (C) 2026 Chris Olin
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 enum {
     HUD_FACE_LABEL = 0,

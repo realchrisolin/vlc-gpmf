@@ -7,6 +7,7 @@
  * sample GPS9 the same way as a full read, including the points that fall
  * between two payloads.
  *
+ * Copyright (C) 2026 Chris Olin
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "gpmf_read.h"

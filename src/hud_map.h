@@ -6,6 +6,7 @@
  *
  * The panel is drawn first, then map tiles, then the marker.
  *
+ * Copyright (C) 2026 Chris Olin
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 enum {

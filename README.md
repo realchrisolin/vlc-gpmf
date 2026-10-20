@@ -24,6 +24,10 @@ GPL-2.0-or-later. The license is [`LICENSE`](LICENSE). The grant is also in [`CO
 
 The module score is 0, so it stays off until `--sub-source=gpmf` or the GPMF sub-source preference turns it on. A file with no `gpmd` track plays without the overlay.
 
+This is an out-of-tree module for VLC 3.0.x. The plugin ABI in these headers is `3_0_0f`, so a build for 3.0 does not load in VLC 4. It is not a VideoLAN project. The descriptor follows the sub-source shape used by modules such as marq: capability `sub source`, category Video / Subtitles, and `Open` / `Close`.
+
+The makefile defines `MODULE_STRING` and `__PLUGIN__`. There is no `config.h`. No gettext catalog is shipped, and the descriptor does not call `set_text_domain`. That is the out-of-tree choice for a plugin that does not translate its own strings. With no domain of its own, a preference label that matches one of VLC's strings can follow VLC's translation.
+
 ## Time
 
 The clock uses GPSU when that stream exists, then GPS9, then the MP4 creation time. GPS times are UTC. A file timestamp is shown as the digits stored in the file.
@@ -99,7 +103,9 @@ Windows uses the VLC 3.0.23 headers in `third_party/vlc` and links the installed
 mingw32-make CC=gcc
 ```
 
-That writes `build/libgpmf_plugin.dll`. The link uses `-static-libgcc`, so the DLL does not depend on `libgcc_s` or `winpthread`. VLC rejects a plugin that needs those.
+That writes `build/libgpmf_plugin.dll`. The link uses `-static-libgcc`, so the DLL does not depend on `libgcc_s` or `winpthread`. VLC rejects a plugin that needs those. `VLC_DLL` overrides the `libvlccore.dll` path. The default is `C:/Program Files/VideoLAN/VLC/libvlccore.dll`.
+
+On Linux and macOS, `make install` copies the plugin to `$(PREFIX)/lib/vlc/plugins/misc`. `PREFIX` defaults to `/usr/local`. Regenerate the plugin cache after that copy. On Windows, copy `build/libgpmf_plugin.dll` into VLC's `plugins\misc`, or keep using `VLC_PLUGIN_PATH` as below. `make install` on Windows only prints those two choices.
 
 `make` builds the plugin only. `src/dump.c` prints a track. On Windows:
 
@@ -143,4 +149,4 @@ Relative zone needs `timezone21.bin` and a `zoneinfo/` tree beside it. The plugi
 - **timezone21.bin** is compiled for ZoneDetect from timezone-boundary-builder. That project is derived from OpenStreetMap and is offered under the Open Database License: <https://opendatacommons.org/licenses/odbl/>. It contains Natural Earth data, placed in the public domain.
 - **zoneinfo/** is the IANA time zone database, public domain, packaged from tzdata 2026.5.
 - **stb_image** v2.30 (`src/stb_image.h`) decodes map tiles. Sean Barrett released it into the public domain, with an MIT alternative in the same file.
-- **VLC 3.0.23 plugin SDK** under `third_party/vlc` is VideoLAN's headers, used to build on Windows, and remains under the GNU GPL. Linux and macOS builds use the headers from the installed VLC development package.
+- **VLC 3.0.23 plugin SDK** under `third_party/vlc` is an unmodified extract of the `sdk/` directory in VideoLAN's official `vlc-3.0.23-win64.7z`. The headers and import libraries belong to libvlccore and stay under the GNU Lesser General Public License, version 2.1 or later. See `third_party/vlc/NOTICE` and `third_party/vlc/COPYING.LIB`. Linux and macOS builds use the headers from the installed VLC development package. The vendored `.pc` files keep VideoLAN's CI prefix, so the Windows makefile includes the headers from this tree and links the installed `libvlccore.dll`.

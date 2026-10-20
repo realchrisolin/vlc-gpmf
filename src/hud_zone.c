@@ -1,5 +1,6 @@
 /*
  * GNSS timezone and civil-time conversion for the HUD.
+ * Copyright (C) 2026 Chris Olin
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  * Lat/lon goes through ZoneDetect. The offset comes from an IANA TZif file
